@@ -178,12 +178,10 @@ class Location:
         return self._number
 
     def __repr__(self) -> str:
-        # Representação oficial e não ambígua do objeto
         return (f"Location(country={self._country!r}, state={self._state!r}, "
                 f"city={self._city!r}, street={self._street!r}, number={self._number!r})")
     
     def __str__(self) -> str:
-        # Representação legível do objeto, mais voltada para o usuário
         return (f"{self._street} {self._number}, {self._city} - {self._state}, {self._country}")
 
 # Classe para o estoque
