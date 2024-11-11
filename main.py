@@ -130,7 +130,13 @@ class Employee:
         self._current_store = current_store
     
     def change_role(self, new_role):
-        self._role = new_role
+        if isinstance(new_role, Roles):
+            new_role = new_role.name
+        
+        try:
+            self.role = Roles[new_role]
+        except KeyError:
+            raise ValueError(f"Invalid role: {new_role}")
 
     def __repr__(self) -> str:
         class_ = self.__class__.__name__
@@ -182,8 +188,8 @@ class Location:
 
 # Classe para o estoque
 class Stock:
-    def __init__(self, instruments = []):
-        self._instruments = instruments
+    def __init__(self, instruments = None):
+        self._instruments = instruments if instruments is not None else []
 
     @property
     def instruments(self):
@@ -193,7 +199,8 @@ class Stock:
         self._instruments.append(instrument)
 
     def remove_instrument(self):
-        self._instruments.remove(self._instruments[-1])
+         if self._instruments:
+            self._instruments.pop()
 
     def count_instruments(self, instrument_type):
         return sum(1 for instrument in self._instruments if isinstance(instrument, instrument_type))
